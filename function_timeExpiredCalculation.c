@@ -98,5 +98,22 @@ while(1) /*done in a loop for polling*/
 		/* do something... */
 
 		loop_timer_ms = HAL_timer1Ms_now(); //update loop's timer variable
-	} 
+	}
+
+	/*alternative in which is passed only the duration, while the timer is local*/
+	LEDCUP_TaskExec(LEDCUP_LOOP_MS);
+
+
+}
+
+
+static void LEDCUP_TaskExec(uint32_t delay_ms)
+{
+	static uint32_t led_timer_ms = 0;
+	if (TIMER_isExpired_ms(led_timer_ms, delay_ms))
+	{
+		/* do something... */
+
+		led_timer_ms = TIMER_Now_ms();
+	}
 }
